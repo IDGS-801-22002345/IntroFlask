@@ -1,0 +1,41 @@
+{%extends "layout.html"%} {% block container %}
+
+<form action="/OperasBas" method="post">
+  <label for="N1">Numero 1:</label>
+  <br />
+  <input type="number" name="n1" id="n1" />
+  <br />
+
+  <label for="N2">Numero 2:</label>
+  <br />
+
+  <input type="number" name="n2" id="n2" />
+  <br />
+
+  <div>
+    <input type="radio" id="sumar" name="operacion" value="1" />
+    <label for="sumar">Sumar</label>
+    <input type="radio" id="restar" name="operacion" value="2" />
+    <label for="restar">Restar</label>
+    <input type="radio" id="multiplicar" name="operacion" value="3" />
+    <label for="multiplicar">Multiplicar</label>
+    <input type="radio" id="dividir" name="operacion" value="4" />
+    <label for="dividir">Dividir</label>
+  </div>
+  <br />
+  <input type="submit" value="Calcular" />
+</form>
+<br />
+<br />
+<br />
+<br />
+<br />
+
+<div>
+  <h2>Resultado de la operación</h2>
+  <p>
+    La {{ operacion_texto }} de {{ n1 }} y {{ n2 }} es:
+    <p>{{ resultado }}</p>
+  </p>
+</div>
+{%endblock%}

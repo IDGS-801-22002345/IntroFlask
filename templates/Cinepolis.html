@@ -1,0 +1,58 @@
+{% extends "layout.html" %} {% block container %}
+<div class="center-text flex flex-column-center">
+  <div class="row text-center">
+    <h1>Cinepolis</h1>
+  </div>
+  <form action="/Cinepolis" method="POST">
+    <div class="row flex-row-center">
+      <div class="col center-text border flex-column-center">
+        <h3>Entradas</h3>
+        <label for="name">Nombre:</label>
+        <input type="text" name="name" id="name" value="{{ name }}" required />
+        <br />
+        <label for="numPersonas">Cantidad Compradores:</label>
+        <input
+          type="number"
+          name="numPersonas"
+          id="numPersonas"
+          value="{{ numPersonas }}"
+          required
+        />
+        <br />
+        <label>Tarjeta Cineco:</label>
+        <input type="radio" id="Si" name="pago" value="1" required />
+        <label for="Si">Si</label>
+        <input type="radio" id="No" name="pago" value="2" required />
+        <label for="No">No</label>
+        <br />
+        <label for="numBoletos">Cantidad de Boletos:</label>
+        <input
+          type="number"
+          name="numBoletos"
+          id="numBoletos"
+          value="{{ numBoletos }}"
+          required
+        />
+      </div>
+      <div class="col center-text border flex-column-center">
+        <h3>Salida</h3>
+        <label for="totalPagar">Total a pagar:</label>
+        <input
+          type="text"
+          name="totalPagar"
+          id="totalPagar"
+          readonly
+          value="{{ total_pagar }}"
+        />
+      </div>
+    </div>
+    <div class="row text-center" style="padding-top: 400px">
+      <div class="border">
+        <h1>Acciones</h1>
+        <input type="submit" value="Calcular" />
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
