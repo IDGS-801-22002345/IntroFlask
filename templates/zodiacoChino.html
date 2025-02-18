@@ -1,0 +1,122 @@
+{% extends "layout.html" %} {% block container %}
+<div class="center-text flex flex-column-center">
+  <div class="row text-center">
+    <h1>Zodiaco chino</h1>
+  </div>
+  <form action="/Zodiaco" method="POST">
+    <div class="row flex-row-center">
+      <div class="col center-text border flex-column-center">
+        <h5>Datos personales</h5>
+        <label for="nombre">Nombre:</label>
+        <input
+          type="text"
+          name="nombre"
+          id="nombre"
+          value="{{ nombre }}"
+          required
+        />
+        <br />
+        <label for="apellido_paterno">Apellido paterno:</label>
+        <input
+          type="text"
+          name="apellido_paterno"
+          id="apellido_paterno"
+          value="{{ apellido_paterno }}"
+          required
+        />
+        <br />
+        <label for="apellido_materno">Apellido materno:</label>
+        <input
+          type="text"
+          name="apellido_materno"
+          id="apellido_materno"
+          value="{{ apellido_materno }}"
+          required
+        />
+        <br />
+        <br />
+        <h5>Fecha de cumpleaños</h5>
+        <br />
+        <div class="row">
+          <div class="col">
+            <label for="dia">Dia:</label>
+            <input
+              type="number"
+              name="dia"
+              id="dia"
+              value="{{ dia }}"
+              required
+            />
+          </div>
+          <div class="col">
+            <label for="mes">Mes:</label>
+            <input
+              type="number"
+              name="mes"
+              id="mes"
+              value="{{ mes }}"
+              required
+            />
+          </div>
+          <div class="col">
+            <label for="anio">Año:</label>
+            <input
+              type="number"
+              name="anio"
+              id="anio"
+              value="{{ anio }}"
+              required
+            />
+          </div>
+        </div>
+        <br />
+        <label>Sexo:</label>
+        <br />
+        <label for="Masculino">Masculino</label>
+        <input
+          type="radio"
+          id="Masculino"
+          name="sexo"
+          value="Masculino"
+          required
+        />
+        <br />
+        <label for="Femenino">Femenino</label>
+        <input
+          type="radio"
+          id="Femenino"
+          name="sexo"
+          value="Femenino"
+          required
+        />
+        <br />
+        <br />
+        <div class="row text-center">
+          <input type="submit" value="Imprimir" class="btn btn-primary" />
+        </div>
+      </div>
+      <div class="col center-text border flex-column-center">
+        <h5>Resultado</h5>
+        <span
+          >Hola
+          <b
+            >{{ nombre }} {{ apellido_paterno }} {{ apellido_materno }}</b
+          ></span
+        >
+        <br />
+        <span>Tienes <b>{{ edad }} </b>años</span>
+        <br />
+        <span>Tu signo zodiacal chino es: <b>{{ signo }}</b></span>
+        <br />
+        {% if signo %}
+        <img
+          src="{{ url_for('static', filename='img/zodiacales/' + signo + '.svg') }}"
+          alt="{{ signo }}"
+          style="width: 100px; height: 100px"
+        />
+        {% endif %}
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,3 +1,4 @@
+from datetime import datetime 
 from flask import Flask,render_template,request
 
 app=Flask(__name__)
@@ -41,20 +42,6 @@ def suma(n1,n2):
 def func(param="juan"):
     return f"<h1>Hola, {param}</h1>"
 
-# @app.route("/operas")
-# def operas():
-#     return '''
-#  <form action="">
-#         <label for="">Name</label>
-#         <input type="text" id="name" name="name" required>
-
-#         <label for="">APaterno</label>
-#         <input type="text" id="APaterno" name="APaterno" required>
-#     </form>
-        #    '''
-# @app.route("/OperasBas")
-# def operas():
-#     return render_template("OperasBas.html")7
 
 @app.route("/Cinepolis", methods=["GET", "POST"])
 def menu():
@@ -124,6 +111,29 @@ def result():
         return render_template("OperasBas.html", n1=n1, n2=n2, resultado=resultado, operacion_texto=operacion_texto)
 
     return render_template("OperasBas.html")
+
+
+@app.route("/Zodiaco", methods=["GET", "POST"])
+def zodiaco():
+    if request.method == "POST":
+        nombre = request.form.get("nombre")
+        apellido_paterno = request.form.get("apellido_paterno")
+        apellido_materno = request.form.get("apellido_materno")
+        dia = int(request.form.get("dia"))
+        mes = int(request.form.get("mes"))
+        anio = int(request.form.get("anio"))
+        sexo = request.form.get("sexo")
+
+        edad = datetime.now().year - anio
+        signo = obtener_signo_zodiaco_chino(anio)
+
+        return render_template("zodiacoChino.html", nombre=nombre, apellido_paterno=apellido_paterno, apellido_materno=apellido_materno, edad=edad, signo=signo, sexo=sexo)
+    return render_template("zodiacoChino.html")
+
+def obtener_signo_zodiaco_chino(anio):
+    signos = ["Mono", "Gallo", "Perro", "Cerdo", "Rata", "Buey", "Tigre", "Conejo", "Dragon", "Serpiente", "Caballo", "Cabra"]
+    indice = (anio % 12)
+    return signos[indice]
 
 
 if __name__ == "__main__":
