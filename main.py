@@ -1,6 +1,8 @@
 from datetime import datetime 
 from flask import Flask,render_template,request
 
+import forms 
+
 app=Flask(__name__)
 
 @app.route("/")
@@ -134,6 +136,21 @@ def obtener_signo_zodiaco_chino(anio):
     signos = ["Mono", "Gallo", "Perro", "Cerdo", "Rata", "Buey", "Tigre", "Conejo", "Dragon", "Serpiente", "Caballo", "Cabra"]
     indice = (anio % 12)
     return signos[indice]
+
+
+@app.route("/alumnos", methods=["GET", "POST"])
+def alumnos():
+    mat=''
+    nom=''
+    ape=''
+    email=''
+    alummo_clas=forms.UserForm(request.form)
+    if request.method == 'POST':
+        mat=alummo_clas.matricula.data
+        nom=alummo_clas.nombre.data
+        ape=alummo_clas.apellido.data
+        email=alummo_clas.correo.data
+    return render_template("alumnos.html", form=alummo_clas,mat=mat,nom=nom,ape=ape,email=email)
 
 
 if __name__ == "__main__":
