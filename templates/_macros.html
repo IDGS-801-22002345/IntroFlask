@@ -5,4 +5,10 @@
 {%endmacro%} {%macro camposNuevos(field)%}
 <td>{{ field.label}}</td>
 <dd>{{field(**kwargs) | safe}}</dd>
-{%endmacro%}
+{%if field.errors%}
+<ul>
+  {%for error in field.errors%}
+  <li style="color: red">{{error}}</li>
+  {%endfor%}
+</ul>
+{%endif%} {%endmacro%}

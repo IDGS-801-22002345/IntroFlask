@@ -1,15 +1,36 @@
 from datetime import datetime 
 from flask import Flask,render_template,request
-
+from flask import g
+from flask_wtf.csrf import CSRFProtect
+from flask import flash
 import forms 
 
 app=Flask(__name__)
+app.secret_key="esta es una clave secreta"
+csr=CSRFProtect()
+
+@app.errorhandler(404)
+def page_notfound(e):
+    return render_template("404.html"), 404
+
+@app.before_request
+def before_request():
+    g.user= "Mario"
+    print("beforer1")
+
+@app.after_request
+def after_request(response):
+    print("afterr1")
+    return response
 
 @app.route("/")
 def index():
+    nom= 'None'
     titulo="IDGS80111111"
     lista=["Pedro","Luis","Maico"]
-    return render_template("index.html", titulo=titulo, lista=lista)
+    nom=g.user
+    print('Entro index {}'.format(g.user))
+    return render_template("index.html", titulo=titulo, lista=lista, nom=nom)
 
 @app.route("/ejemplo1")
 def ejemplo1():
@@ -140,18 +161,21 @@ def obtener_signo_zodiaco_chino(anio):
 
 @app.route("/alumnos", methods=["GET", "POST"])
 def alumnos():
-    mat=''
+    mat=0
     nom=''
     ape=''
     email=''
     alummo_clas=forms.UserForm(request.form)
-    if request.method == 'POST':
+    if request.method == 'POST' and alummo_clas.validate():
         mat=alummo_clas.matricula.data
         nom=alummo_clas.nombre.data
         ape=alummo_clas.apellido.data
         email=alummo_clas.correo.data
+        mensaje='Bienvendio {}'.format(nom)
+        flash(mensaje)
     return render_template("alumnos.html", form=alummo_clas,mat=mat,nom=nom,ape=ape,email=email)
 
 
 if __name__ == "__main__":
+    csr.init_app(app)
     app.run(debug=True, port=3000)
